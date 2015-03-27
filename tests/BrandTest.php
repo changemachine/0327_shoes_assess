@@ -1,187 +1,163 @@
 <?php
 
-
     /**
     * @backupGlobals disabled
     * $backupStaticAttribute disabled
     */
 
-    $DB = new PDO('pgsql:host=localhost;dbname=library_test');
+    $DB = new PDO('pgsql:host=localhost;dbname=shoes_test');
 
-    require_once "src/Author.php";
-    require_once "src/Book.php";
-    require_once "src/Copy.php";
-    require_once "src/Patron.php";
-    require_once "src/Checkout.php";
+    require_once "src/Store.php";
+    require_once "src/Brand.php";
 
-    class BookTest extends PHPUnit_Framework_TestCase
+    class BrandTest extends PHPUnit_Framework_TestCase
     {
 
         protected function tearDown(){
-            Author::deleteAll();
-            Book::deleteAll();
-            Copy::deleteAll();
-            Patron::deleteAll();
-            Checkout::deleteAll();
+            Store::deleteAll();
+            Brand::deleteAll();
         }
 
-        // SET & GET PROPERTIES
-
-        //SAVE GET-ALL, DELETE-ALL
-        function test_save()
-        {
+    // SET-GET PROPERTIES
+        function test_setBrandName(){
             //Arrange
-            $title = "Create Dangerously";
-            $genre = "Memoir";
+            $brand_name = "New Balance";
             $id = 1;
-            $test_book = new Book($title, $genre, $id);
+            $test_brand = new Brand($brand_name, $id);
+            $test_brand->save();
+
             //Act
-            $test_book->save();
+            $test_brand->setBrandName("Newt Balance");
+            $result = $test_brand->getBrandName();
 
             //Assert
-            $result = Book::getAll();
-            $this->assertEquals($test_book, $result[0]);
+            $this->assertEquals("Newt Balance", $result);
         }
 
-        function test_getAll()
-        {
+        function test_setId(){
             //Arrange
-            $title = "Create Dangerously";
-            $genre = "Memoir";
+            $brand_name = "Floppy Shoes";
             $id = 1;
-            $test_book = new Book($title, $genre, $id);
-            $test_book->save();
-
-            $title2 = "Spiritual Economics";
-            $genre2 = "Economics";
-            $id2 = 2;
-            $test_book2 = new Book($title2, $genre2, $id2);
-            $test_book2->save();
+            $new_brand = new Brand($brand_name, $id);
+            $new_brand->save();
 
             //Act
-            $result = Book::getAll();
-            $this->assertEquals([$test_book, $test_book2], $result);
+            $new_brand->setId(2);
+
+            //Assert
+            $this->assertEquals(2, $new_brand->getId());
         }
 
-        function test_deleteAll()
-        {
+    // SAVE GET-ALL, DELETE-ALL
+        function test_save(){
             //Arrange
-            $title = "Create Dangerously";
-            $genre = "Memoir";
+            $brand_name = "Keds";
             $id = 1;
-            $test_book = new Book($title, $genre, $id);
-            $test_book->save();
-
-            $title2 = "Spiritual Economics";
-            $genre2 = "Economics";
-            $id2 = 2;
-            $test_book2 = new Book($title2, $genre2, $id2);
-            $test_book2->save();
+            $test_brand = new Brand($brand_name, $id);
+            $test_brand->save();
 
             //Act
-            Book::deleteAll();
-            $result = Book::getAll();
+            $result = Brand::getAll();
+
+            //Assert
+            $this->assertEquals($test_brand, $result[0]);
+        }
+
+        function test_getAll(){
+            //Arrange
+            $brand_name = "Roos";
+            $id = 1;
+            $test_brand = new Brand($brand_name, $id);
+            $test_brand->save();
+
+            $brand_name2 = "Keds";
+            $id2 = 2;
+            $test_brand2 = new Brand($brand_name2, $id2);
+            $test_brand2->save();
+
+            //Act
+            $result = Brand::getAll();
+            $this->assertEquals([$test_brand, $test_brand2], $result);
+        }
+
+        function test_deleteAll(){
+            //Arrange
+            $brand_name = "Roos";
+            $id = 1;
+            $roos = new Brand($brand_name, $id);
+            $roos->save();
+
+            $brand_name2 = "Keds";
+            $id2 = 2;
+            $keds = new Brand($brand_name2, $id2);
+            $keds->save();
+
+
+            //Act
+            Brand::deleteAll();
+            $result = Brand::getAll();
 
             //Assert
             $this->assertEquals([], $result);
         }
 
-        //FIND BY AUTHOR, UPDATE & DELETE AUTHOR
-        function test_find()
-        {
-            //Arrange
-            $title = "Create Dangerously";
-            $genre = "Memoir";
-            $id = 1;
-            $test_book = new Book($title, $genre, $id);
-            $test_book->save();
 
-            $title2 = "Spiritual Economics";
-            $genre2 = "Economics";
+    //FIND, UPDATE & DELETE BRAND
+        function test_findBrand(){
+            //Arrange
+            $brand_name = "Roos";
+            $id = 1;
+            $roos = new Brand($brand_name, $id);
+            $roos->save();
+
+            $brand_name2 = "Keds";
             $id2 = 2;
-            $test_book2 = new Book($title2, $genre2, $id2);
-            $test_book2->save();
+            $keds = new Brand($brand_name2, $id2);
+            $keds->save();
 
             //Act
-            $result = Book::find($test_book->getId());
+            $result = Brand::findBrand($roos->getId());
 
             //Assert
-            $this->assertEquals($test_book, $result);
+            $this->assertEquals($roos, $result);//$result->id);
         }
 
-        function test_update()
-        {
+        function test_update(){
             //Arrange
-            $title = "Create Dangerously";
-            $genre = "Memoir";
+            $brand_name = "Roos";
             $id = 1;
-            $test_book = new Book($title, $genre, $id);
-            $test_book->save();
-            $new_title = "Sam Clemens";
-            $new_genre = "Willa Cather";
+            $roos = new Brand($brand_name, $id);
+            $roos->save();
 
             //Act
-            $test_book->update($new_title, $new_genre);
+            $rename = "Roosters";
+            $roos->update($rename);
 
             //Assert
-            $this->assertEquals(['Sam Clemens', 'Willa Cather'], [$test_book->getTitle(), $test_book->getGenre()]);
+            $this->assertEquals('Roosters', $roos->getBrandName());
         }
 
-        function test_deleteAuthor()
-        {
+        function test_deleteStore(){ //Store no longer sells Adidas
             //Arrange
-            $title = "Create Dangerously";
-            $genre = "Memoir";
+            $brand_name = "Adidas";
             $id = 1;
-            $test_book = new Book($title, $genre, $id);
-            $test_book->save();
+            $adidas = new Brand($brand_name, $id);
+            $test_brand->save();
 
-            $title2 = "Spiritual Economics";
-            $genre2 = "Economics";
+            $brand_name2 = "Roos";
             $id2 = 2;
-            $test_book2 = new Book($title2, $genre2, $id2);
-            $test_book2->save();
+            $roos = new Brand($brand_name2, $id2);
+            $roos->save();
 
             //Act
-            $test_book2->deleteBook();
-            $result = Book::getAll();
+            $adidas->deleteBrand();
+            $result = Brand::getAll();
 
             //Assert
-            $this->assertEquals([$test_book], $result);
-
+            $this->assertEquals([$roos], $result);
         }
 
-        // CREATE, GET COPIES
-        function test_addCopy()
-        {
-            //Arrange
-            $title = "Create Dangerously";
-            $genre = "Memoir";
-            $id = 1;
-            $test_book = new Book($title, $genre, $id);
-            $test_book->save();
 
-            //Act
-            $test_book->addCopy();
-            $result = $test_book->getCopies();
-            //Assert
-            $this->assertEquals(1, $result);
-        }
-
-        function test_getCopies()
-        {
-            $title = "Create Dangerously";
-            $genre = "Memoir";
-            $id = 1;
-            $test_book = new Book($title, $genre, $id);
-            $test_book->save();
-
-            $test_book->addCopy();
-            $test_book->addCopy();
-
-            $result = $test_book->getCopies();
-            $this->assertEquals(2, $result);
-        }
 
 
 
