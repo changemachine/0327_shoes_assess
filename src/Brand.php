@@ -10,7 +10,7 @@
             $this->id = $id;
         }
 
-        //SET GET PROPS
+    // SET GET PROPS
         function setBrandName($new_brand_name){
             $this->brand_name = (string) $new_brand_name;
         }
@@ -25,7 +25,7 @@
             return $this->id;
         }
 
-        //SAVE GET-ALL, DELETE-ALL
+    // SAVE GET-ALL, DELETE-ALL
         function save(){
             $statement = $GLOBALS['DB']->query("INSERT INTO brands (brand_name) VALUES ('{$this->getBrandName()}') RETURNING id;");
             $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -49,7 +49,7 @@
         }
 
 
-    // √ FIND, UPDATE & DELETE BRAND
+    // FIND, UPDATE & DELETE BRAND
 
         static function findBrand($search_id){
             $found_brand = null;
@@ -68,20 +68,17 @@
             $this->setBrandName($new_brand_name);
         }
 
-        function deleteBrand(){ // UNTESTED JOIN-TABLE DELETE
+        function deleteBrand(){ //Brand no longer available
             $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
             $GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE brand_id = {$this->getId()};");
         }
 
-        function addStoreBrand($store){
+    // JOINS
+        function addStoreToBrand($store){ // Join in stores_brands
             $GLOBALS['DB']->exec("INSERT INTO stores_brands (store_id, brand_id) VALUES ({$store->getId()}, {$this->getId()});");
         }
 
-        function deleteStoreBrand(){ //Store drops brand UNCHECKED "AND"
-            $GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE store_id = {$store->getId()} AND brand_id = {$this->getId()};");
-        }
-
-        function getStores(){
+        function getBrandStores(){
             $query = $GLOBALS['DB']->query("SELECT stores.* FROM brands
                 JOIN stores_brands ON (brands.id = stores_brands.brand_id)
                 JOIN stores ON (stores_brands.store_id = stores.id)
@@ -97,21 +94,13 @@
             return $stores;
         }
 
-        // function addPair() ADD INSTANCES OF SHOES
-        // {
-        //     $GLOBALS['DB']->exec("INSERT INTO copies (brand_id) VALUES ({$this->getId()});");
-        // }
-        //
-        // function getCopies()
-        // {
-        //     $query = $GLOBALS['DB']->query("SELECT brand_id, count(1) FROM copies WHERE brand_id = {$this->getId()} GROUP BY brand_id;");
-        //
-        //     $returned_copies = $query->fetchAll(PDO::FETCH_ASSOC);
-        //
-        //         $count = $returned_copies[0]['count'];
-        //         return $count;
-        //     }
-        //
-        // }
+        function deleteStoreBrand(){ //Store drops brand UNCHECKED "AND"
+            $GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE store_id = {$store->getId()} AND brand_id = {$this->getId()};");
+        }
+
+
+
+
+    }
 
 ?>

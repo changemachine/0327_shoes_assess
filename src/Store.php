@@ -1,102 +1,106 @@
-<!-- <?php
+<?php
 
-    class Author{
+    class Store
+    {
 
-    private $author;
-    private $id;
+        private $name;
+        private $id;
 
-    function __construct($author, $id){
-        $this->author = $author;
-        $this->id = $id;
-    }
+        function __construct($name, $id){
+            $this->name = $name;
+            $this->id = $id;
+        }
 
     //SET GET PROPS
-    function setAuthor($new_author){
-        $this->author = (string) $new_author;
-    }
 
-    function getAuthor(){
-        return $this->author;
-    }
+        function setName($new_name){
+            $this->name = (string) $new_name;
+        }
 
-    function setId($new_id){
-        $this->id = (int) $new_id;
-    }
+        function getName(){
+            return $this->name;
+        }
 
-    function getId(){
-        return $this->id;
-    }
+        function setId($new_id){
+            $this->id = (int) $new_id;
+        }
+
+        function getId(){
+            return $this->id;
+        }
 
     //SAVE GET-ALL, DELETE-ALL
-    function save(){
-        $statement = $GLOBALS['DB']->query("INSERT INTO authors (author) VALUES ('{$this->getAuthor()}') RETURNING id;");
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
-        $this->setId($result['id']);
-    }
 
-    static function getAll(){
-        $returned_authors = $GLOBALS['DB']->query("SELECT * FROM authors;");
-        $authors = array();
-        foreach ($returned_authors as $r_author){
-            $author = $r_author['author'];
-            $id = $r_author['id'];
-            $new_author = new Author($author, $id);
-            array_push($authors, $new_author);
+        function save(){
+            $statement = $GLOBALS['DB']->query("INSERT INTO stores (name) VALUES ('{$this->getName()}') RETURNING id;");
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            $this->setId($result['id']);
         }
-        return $authors;
-    }
 
-    static function deleteAll(){
-        $GLOBALS['DB']->exec("DELETE FROM authors *;");
-    }
-
-
-    // √ FIND BY AUTHOR, UPDATE & DELETE AUTHOR
-    static function find($search_id){
-        $found_author = null;
-        $authors = Author::getAll();
-        foreach($authors as $author){
-            $author_id = $author->getId();
-            if($author_id == $search_id){
-                $found_author = $author;
+        static function getAll(){
+            $returned_stores = $GLOBALS['DB']->query("SELECT * FROM stores;");
+            $stores = array();
+            foreach ($returned_stores as $store){
+                $author = $store['name'];
+                $id = $store['id'];
+                $new_store = new Store($name, $id);
+                array_push($stores, $new_store);
             }
+            return $stores;
         }
-        return $found_author;
-    }
 
-    function update($new_author){
-        $GLOBALS['DB']->exec("UPDATE authors SET author = '{$new_author}' WHERE id = {$this->getId()};");
-        $this->setAuthor($new_author);
-    }
-
-    function deleteAuthor(){
-        $GLOBALS['DB']->exec("DELETE FROM authors WHERE id = {$this->getId()};");
-        // JOIN TABLE!
-    }
-
-    function addBook($book){
-        $GLOBALS['DB']->exec("INSERT INTO authors_books (author_id, book_id) VALUES ({$this->getId()}, {$book->getId()});");
-    }
-
-    function getBooks(){
-        $query = $GLOBALS['DB']->query("SELECT books.* FROM authors JOIN authors_books ON (authors.id = authors_books.author_id) JOIN books ON (authors_books.book_id = books.id) WHERE authors.id = {$this->getId()};");
-
-        $returned_books = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        $books = array();
-        foreach($returned_books as $r_book){
-            $title = $r_book['title'];
-            $genre = $r_book['genre'];
-            $id = $r_book['id'];
-            $new_book = new Book($title, $genre, $id);
-            array_push($books, $new_book);
+        static function deleteAll(){
+            $GLOBALS['DB']->exec("DELETE FROM stores *;");
         }
-        return $books;
-    }
+
+
+    // √ FIND, UPDATE & DELETE STORE
+
+        static function find($search_id){
+            $found_store = null;
+            $stores = Store::getAll();
+            foreach($stores as $store){
+                $store_id = $store->getId();
+                if($store_id == $search_id){
+                    $found_store = $store;
+                }
+            }
+            return $found_store;
+        }
+
+        function update($new_name){
+            $GLOBALS['DB']->exec("UPDATE stores SET name = '{$new_name}' WHERE id = {$this->getId()};");
+            $this->setName($new_name);
+        }
+
+        function deleteStore(){ //?
+            $GLOBALS['DB']->exec("DELETE FROM stores WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE store_id = {$this->getId()};");
+        }
+
+        function addBrand($brand){
+            $GLOBALS['DB']->exec("INSERT INTO stores_brands (author_id, brand_id) VALUES ({$this->getId()}, {$brand->getId()});");
+        }
+
+        function getBrandsInStore(){
+            $query = $GLOBALS['DB']->query("SELECT brands.* FROM stores
+                JOIN stores_brands ON (stores.id = stores_brands.store_id)
+                JOIN brands ON (stores_brands.brand_id = brands.id)
+                WHERE stores.id = {$this->getId()};");
+            $returned_brands = $query->fetchAll(PDO::FETCH_ASSOC);
+            $brands = array();
+            foreach($returned_brands as $brand){
+                $brand_name = $brand['brand_name'];
+                $id = $brand['id'];
+                $new_brand = new Brand($title, $id);
+                array_push($brands, $new_brand);
+            }
+            return $brands;
+        }
 
 
 
 
     }
 
-?> -->
+?>

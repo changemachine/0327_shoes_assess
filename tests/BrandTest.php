@@ -102,7 +102,7 @@
         }
 
 
-    //FIND, UPDATE & DELETE BRAND
+    // FIND, UPDATE & DELETE BRAND
         function test_findBrand(){
             //Arrange
             $brand_name = "Roos";
@@ -136,15 +136,49 @@
             //Assert
             $this->assertEquals('Roosters', $roos->getBrandName());
         }
-        function test_deleteBrand(){
 
+        function test_deleteBrand(){ // Brand no longer available
+            //Arrange
+            $brand_name = "Nazi Boots";
+            $id = 1;
+            $naziboots = new Brand($brand_name, $id);
+            $naziboots->save();
+            //Act
+            $naziboots->deleteBrand();
+            $result = Brand::getAll();
+            //Assert
+            $this->assertEquals([], $result);
         }
-        function test_deleteStore(){ //Store no longer sells Adidas
+
+    // JOINS
+        function test_addStoreToBrand(){ // + getBrandStores()
+            //Arrange
+            $brand_name = "Roos";
+            $id = 1;
+            $roos = new Brand($brand_name, $id);
+            $roos->save();
+
+            $name = "Payless";
+            $id2 = 2;
+            $payless = new Store($name, $id);
+            $payless->save();
+
+            //Act
+            $roos->addStoreToBrand($payless);
+            $result = $roos->getBrandStores();
+
+            //Assert
+            $this->assertEquals([$payless], $result);
+        }
+
+
+
+        function test_deleteStoreBrand(){ // Store drops brand
             //Arrange
             $brand_name = "Adidas";
             $id = 1;
             $adidas = new Brand($brand_name, $id);
-            $test_brand->save();
+            $adidas->save();
 
             $brand_name2 = "Roos";
             $id2 = 2;

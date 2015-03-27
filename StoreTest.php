@@ -8,11 +8,9 @@
 
     $DB = new PDO('pgsql:host=localhost;dbname=library_test');
 
-    require_once "src/Author.php";
-    require_once "src/Book.php";
-    require_once "src/Copy.php";
-    require_once "src/Patron.php";
-    require_once "src/Checkout.php";
+    require_once "src/Store.php";
+    require_once "src/Brand.php";
+
 
     class AuthorTest extends PHPUnit_Framework_TestCase
     {
