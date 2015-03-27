@@ -68,13 +68,17 @@
             $this->setBrandName($new_brand_name);
         }
 
-        function deleteBrand(){ //UNTESTED JOIN-TABLE DELETE
+        function deleteBrand(){ // UNTESTED JOIN-TABLE DELETE
             $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
-            $GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE brand_id = {$this->getId()};");
         }
 
-        function addStore($store){
+        function addStoreBrand($store){
             $GLOBALS['DB']->exec("INSERT INTO stores_brands (store_id, brand_id) VALUES ({$store->getId()}, {$this->getId()});");
+        }
+
+        function deleteStoreBrand(){ //Store drops brand UNCHECKED "AND"
+            $GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE store_id = {$store->getId()} AND brand_id = {$this->getId()};");
         }
 
         function getStores(){

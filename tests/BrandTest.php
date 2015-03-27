@@ -136,7 +136,9 @@
             //Assert
             $this->assertEquals('Roosters', $roos->getBrandName());
         }
+        function test_deleteBrand(){
 
+        }
         function test_deleteStore(){ //Store no longer sells Adidas
             //Arrange
             $brand_name = "Adidas";
