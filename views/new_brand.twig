@@ -7,25 +7,28 @@
 
 Ask which stores carry it.
 
+    <form action='/addStoreBrands' method='post'>
 
         {% if stores is not empty %}
-            <p>Here are the tasks:</p>
-            <ul>
-                {% for task in tasks %}
-                    <li>{{ task.getDescription }}</li>
-                {% endfor %}
-            </ul>
+            <p>Which stores carry this?</p>
+            {% for store in stores %}
+            <input type="checkbox" name="{{ store.getId }}" value={{ store.getId }}> {{ store.getStoreName }}<br>
+
+
+            {% endfor %}
         {% endif %}
 
-        <h4>Add a task</h4>
 
-        <form action='/tasks' method='post'>
-            <input id="category_id" name="category_id" type="hidden" value="{{ category.getId() }}">
-            <label for='description'>Task Description</label>
-            <input id='description' name='description' type='text'>
-
-            <button type='submit'>Add task</button>
+          <input type="checkbox" name="vehicle" value="Car" checked> I have a car<br>
+          <input type="submit" value="Submit">
         </form>
+
+
+        <!-- <input id="category_id" name="category_id" type="hidden" value="{{ category.getId() }}">
+        <label for='description'>Task Description</label>
+        <input id='description' name='description' type='text'>
+        <button type='submit'>Add task</button> -->
+    </form>
 
         <p><a href='/'>Home</a></p>
 

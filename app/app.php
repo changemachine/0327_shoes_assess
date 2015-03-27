@@ -22,8 +22,13 @@
         return $app['twig']->render('index.twig', array('brands'=> Brand::GetAll()));
     });
 
-    $app->get("/new_brand{id}", function({id}) use($app){
-        return $app['twig']->render('new_brand.twig', array('stores'=> Store::GetAll()));
+    //$app->get("/new_brand/{id}", function({id}) use($app) {
+    $app->post("/new_brand", function() use($app) {
+        $brand_name = $_POST['brand_name'];
+        $id = null;
+        $new_brand = new Brand($brand_name, $id);
+        $new_brand->save();
+        return $app['twig']->render('index.twig', array('brands'=> Brand::getAll()));
     });
 
 

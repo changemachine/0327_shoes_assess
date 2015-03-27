@@ -8,8 +8,7 @@
 <body>
     <h3>Shootopia.</h3>
     <form action="/new_brand" method="post">
-        <input id="brand_name" name="brand_name" type="text" value='Add a new brand'>
-
+        <input id="brand_name" name="brand_name" type="text" value='New brand'>
         <button type="submit" class='btn btn-xs btn-danger'>Add It</button>
     </form>
 
@@ -17,8 +16,7 @@
         {% if brands is not empty %}
             {% for brand in brands %}
             <!-- display brands as links to getBrandStores({id}) -->
-
-
+            <li>{{ brand.getBrandName }}</li>
             {% endfor %}
         {% endif %}
 
@@ -26,19 +24,6 @@
     </div>
 
 
-<!--
-    {% if brands is not empty %}
-    <h3>- BRANDS -</h3>
-    <div>
-        {% for category in categories %}
-            <div ><a href="/categories/{{ category.getId }}">{{ category.getName }}</a></div >
-        {% endfor %}
-    </div>
-{% else %}
-  <p>There are no categories yet!</p>
-{% endif %}
-
- -->
 
 
 
