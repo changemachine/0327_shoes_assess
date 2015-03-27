@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <title>Shootopia</title>
+</head>
+<body>
+    <h3>Shootopia.</h3>
+    <form action="/new_brand" method="post">
+        <input id="brand_name" name="brand_name" type="text" value='Add a new brand'>
+
+        <button type="submit" class='btn btn-xs btn-danger'>Add It</button>
+    </form>
+
+    <div class='container'>
+        {% if brands is not empty %}
+            {% for brand in brands %}
+            <!-- display brands as links to getBrandStores({id}) -->
+
+
+            {% endfor %}
+        {% endif %}
+
+        <form action'/find_store' >
+    </div>
+
+
+<!--
+    {% if brands is not empty %}
+    <h3>- BRANDS -</h3>
+    <div>
+        {% for category in categories %}
+            <div ><a href="/categories/{{ category.getId }}">{{ category.getName }}</a></div >
+        {% endfor %}
+    </div>
+{% else %}
+  <p>There are no categories yet!</p>
+{% endif %}
+
+ -->
+
+
+
+
+
+
+
+
+</body>
+</html>
