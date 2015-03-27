@@ -9,22 +9,33 @@
     <h3>Shootopia.</h3>
     <form action="/new_brand" method="post">
         <input id="brand_name" name="brand_name" type="text" value='New brand'>
-        <button type="submit" class='btn btn-xs btn-danger'>Add It</button>
+        <button type="submit" class='btn btn-xs btn-danger'>Add a Brand</button>
     </form>
 
     <div class='container'>
         {% if brands is not empty %}
             {% for brand in brands %}
-            <!-- display brands as links to getBrandStores({id}) -->
             <li>{{ brand.getBrandName }}</li>
             {% endfor %}
         {% endif %}
+        <!--{# display brands as links to getBrandStores({id}) #}-->
 
-        <form action'/find_store' >
     </div>
 
 
+    <form action="/new_store" method="post">
+        <input id="name" name="name" type="text" value='New Store'>
+        <button type="submit" class='btn btn-xs btn-danger'>Add a Store</button>
+    </form>
 
+    <div class='container'>
+        {% if stores is not empty %}
+            {% for store in stores %}
+            <li>{{ store.getName }}</li>
+            {% endfor %}
+        {% endif %}
+
+    </div>
 
 
 

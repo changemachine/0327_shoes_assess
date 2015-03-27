@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>To Do List</title>
+    </head>
+    <body>
+        <h1>{{ new_store.getName }}</h1>
+
+Ask which stores carry it.
+
+    <form action='/addBrandStores' method='post'>
+
+        {% if stores is not empty %}
+            <p>Which brands does this store carry?</p>
+            {% for brand in brands %}
+            <input type="checkbox" name="{{ brand.getId }}" value={{ brand.getId }}> {{ brand.getBrandName }}<br>
+
+            {% endfor %}
+        {% endif %}
+
+        <input type="submit" value="Submit">
+    </form>
+
+
+
+    </form>
+
+        <p><a href='/'>Home</a></p>
+
+
+
+
+
+
+
+
+    </body>
+</html>

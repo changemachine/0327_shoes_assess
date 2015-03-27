@@ -2,7 +2,6 @@
 
     require_once __DIR__."/../vendor/autoload.php";
     //Don't forget AUTOLOAD EVER AGAIN!
-
     require_once __DIR__.'/../src/Store.php';
     require_once __DIR__.'/../src/Brand.php';
 
@@ -17,22 +16,27 @@
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
 
-    //HOME, DISPLAY BRANDS  use($app)!
+    //HOME, DISPLAY BRANDS.
     $app->get("/", function() use($app){
-        return $app['twig']->render('index.twig', array('brands'=> Brand::GetAll()));
+        return $app['twig']->render('index.twig', array('brands'=> Brand::getAll(), 'stores'=> Store::getAll()));
     });
 
-    //$app->get("/new_brand/{id}", function({id}) use($app) {
+    //$app-post("/new_brand/{id}", function({id}) use($app) {
     $app->post("/new_brand", function() use($app) {
         $brand_name = $_POST['brand_name'];
         $id = null;
         $new_brand = new Brand($brand_name, $id);
         $new_brand->save();
-        return $app['twig']->render('index.twig', array('brands'=> Brand::getAll()));
+        return $app['twig']->render('index.twig', array('brands' => Brand::getAll(), 'stores' => Store::getAll()));
     });
 
-
-
+    $app->post("/new_store", function() use($app) {
+        $name = $_POST['name'];
+        $id = null;
+        $new_store = new Store($name, $id);
+        $new_store->save();
+        return $app['twig']->render('index.twig', array('stores' => Store::getAll(), 'brands' => Brand::getAll()));
+    });
 
 
 

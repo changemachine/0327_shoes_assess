@@ -12,7 +12,7 @@ Ask which stores carry it.
         {% if stores is not empty %}
             <p>Which stores carry this?</p>
             {% for store in stores %}
-            <input type="checkbox" name="{{ store.getId }}" value={{ store.getId }}> {{ store.getStoreName }}<br>
+            <input type="checkbox" name="{{ store.getId }}" value={{ store.getId }}> {{ store.getName }}<br>
 
 
             {% endfor %}
