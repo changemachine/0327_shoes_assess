@@ -6,19 +6,14 @@
 
 A program to list out local shoe stores and the brands of shoes they carry.
 
-When viewing by store, list out all of the brands at that store, and allow user to add a brand to that store. Don't worry about updating, listing, or deleting for brands).
+When viewing by store, list out all of the brands at that store, and allow user to add a brand to that store.
 
-A getBrands by store method, using a join statement.
+<!-- A "getBrandsByStore" method, using a join statement.
 
 When viewing a single brand, a getStores method for that brand.
 addStore method for brands. Use a join statement.
+-->
 
-
-
-CLASSES Store
-        Brand
-
-TABLES:
 
 ## DATABASE GENERATION
 #### shoes[stores[id, 'name'], brands[id, 'brand'], shoes_stores[id, store_id, brand_id]]
