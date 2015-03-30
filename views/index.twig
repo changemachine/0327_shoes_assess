@@ -7,37 +7,54 @@
 </head>
 <body>
     <h3>Shootopia.</h3>
-    <form action="/new_brand" method="post">
-        <input id="brand_name" name="brand_name" type="text" value='New brand'>
-        <button type="submit" class='btn btn-xs btn-danger'>Add a Brand</button>
-    </form>
-
     <div class='container'>
-        {% if brands is not empty %}
-            {% for brand in brands %}
-            <li>{{ brand.getBrandName }}</li>
-            {% endfor %}
-        {% endif %}
-        <!--{# display brands as links to getBrandStores({id}) #}-->
+        <div class="row">
+            <div name="new_brand" class="col-sm-12" style="background-color:lavender;">
+                <form action="/new_brand" method="post">
+                    <input id="brand_name" name="brand_name" type="text"     value='New brand'>
+                    <button type="submit" class='btn btn-xs btn-success'>Add a Brand</button>
+                </form>
 
+                {% if brands is not empty %}
+                <div class='row'>
+                    {% for brand in brands %}
+
+                    <div class='col-sm-3'>
+                        {{ brand.getBrandName }}
+                    </div>
+
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <!--{# display brands as links to getBrandStores({id}) #}-->
+
+                <form action="/delete_brands" method="post">
+                    <button type="submit" class='btn btn-xs btn-danger'>Delete Brands</button>
+                </form>
+            </div>
+        </div>
+<br>
+        <div class='row'>
+            <div name="new_store" class="col-sm-6" style="background-color:lavender;">
+                <form action="/new_store" method="post">
+                    <input id="name" name="name" type="text" value='New Store'>
+                    <button type="submit" class='btn btn-xs btn-success'>Add a Store</button>
+                </form>
+
+                <div>
+                    {% if stores is not empty %}
+                        {% for store in stores %}
+                        <li>{{ store.getName }}</li>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <form action="/delete_stores" method="post">
+                    <button type="submit" class='btn btn-xs btn-danger'>Delete Stores</button>
+                </form>
+            </div>
+        </div>
     </div>
-
-
-    <form action="/new_store" method="post">
-        <input id="name" name="name" type="text" value='New Store'>
-        <button type="submit" class='btn btn-xs btn-danger'>Add a Store</button>
-    </form>
-
-    <div class='container'>
-        {% if stores is not empty %}
-            {% for store in stores %}
-            <li>{{ store.getName }}</li>
-            {% endfor %}
-        {% endif %}
-
-    </div>
-
-
 
 
 

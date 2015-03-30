@@ -3,6 +3,7 @@
     class Brand {
 
         private $brand_name;
+        // set up private $img;
         private $id;
 
         function __construct($brand_name, $id){

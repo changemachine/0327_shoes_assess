@@ -13,9 +13,9 @@ Ask which stores carry it.
             <p>Which stores carry this?</p>
             {% for store in stores %}
             <input type="checkbox" name="{{ store.getId }}" value={{ store.getId }}> {{ store.getName }}<br>
-
-
             {% endfor %}
+            {% elseif %}
+            <h4>{{ No stores, yo. }}</h4>
         {% endif %}
 
 
