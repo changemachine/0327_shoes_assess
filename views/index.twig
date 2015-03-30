@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <style>
+    /* logo styling goes here */
+    </style>
 
   <title>Shootopia</title>
 </head>
@@ -18,8 +21,7 @@
                 {% if brands is not empty %}
                 <div class='row'>
                     {% for brand in brands %}
-
-                    <div class='col-sm-3'>
+                    <div class='col-sm-3' id="logo" name="logo">
                         {{ brand.getBrandName }}
                     </div>
 

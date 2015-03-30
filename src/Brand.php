@@ -14,6 +14,7 @@
     // SET GET PROPS
         function setBrandName($new_brand_name){
             $this->brand_name = (string) $new_brand_name;
+            //filter http://en.wikipedia.org/wiki/Category:Shoe_brands
         }
         function getBrandName(){
             return $this->brand_name;
