@@ -16,12 +16,13 @@
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
 
-    //HOME, DISPLAY BRANDS.
+//--BRANDS------------------
+    //HOME, DISPLAY ALL BRANDS.
     $app->get("/", function() use($app){
         return $app['twig']->render('index.twig', array('brands'=> Brand::getAll(), 'stores'=> Store::getAll()));
     });
 
-    //$app-post("/new_brand/{id}", function({id}) use($app) {
+    //ADD BRAND
     $app->post("/new_brand", function() use($app) {
         $brand_name = $_POST['brand_name'];
         $id = null;
@@ -30,6 +31,40 @@
         return $app['twig']->render('index.twig', array('brands' => Brand::getAll(), 'stores' => Store::getAll()));
     });
 
+    $app->get('/brand/{id}', function($id) use($app){
+        $brand = Brand::findBrand($id);
+        return $app['twig']->render('brand.twig', array('brand' => $brand, 'brand_stores' => $brand->getBrandStores(), 'stores' => Store::getAll()));
+    });
+
+    //--DELETE BRAND
+    // $app->get("/brand/{id}/delete", function() use($app){
+    //     $this->delete();
+    //     return $app['twig']->render('index.twig', array('brands' => Brand::getAll(), 'stores' => Store::getAll()));
+    // });
+
+    $app->post("/brand/{id}/delete", function($id) use($app){
+        $brand = Brand::findBrand($id);
+        $brand->deleteBrand($id);
+        return $app->redirect('/');
+    });
+
+    //--EDIT BRAND
+
+    $app->get("/brand/{id}/edit", function($id) use ($app){
+        $brand = Brand::findBrand($id);
+        return $app['twig']->render('brand_edit.twig', array('brand' => $brand));
+    });
+
+    $app->post("/brand/{id}/edit", function($id) use ($app){
+        $brand = Brand::findBrand($id);
+        $new_name = $_POST['brand_name'];
+        $brand->setBrandName($new_name);
+
+        return $app['twig']->render('brand_edit.twig', array('brand' => $brand, 'brand_stores' => $brand->getBrandStores(), 'stores' => Store::getAll()));
+    });
+
+
+//--STORES------------------
     $app->post("/new_store", function() use($app) {
         $name = $_POST['name'];
         $id = null;
@@ -38,11 +73,17 @@
         return $app['twig']->render('index.twig', array('stores' => Store::getAll(), 'brands' => Brand::getAll()));
     });
 
+    $app->get('/store/{id}', function($id) use($app){
+        $store = Store::findStore($id);
+        return $app['twig']->render('store.twig', array('store' => $store, 'store_brands' => $store->getStoreBrands(), 'brands' => Brand::getAll()));
+    });
+
+
     $app->post("/delete_brands", function() use($app){
         Brand::deleteAll();
         return $app['twig']->render('index.twig', array('brands' => Brand::getAll(), 'stores' => Store::getAll()));
     });
-    
+
     $app->post("/delete_stores", function() use($app){
         Store::deleteAll();
         return $app['twig']->render('index.twig', array('brands' => Brand::getAll(), 'stores' => Store::getAll()));

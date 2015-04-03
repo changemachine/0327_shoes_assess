@@ -17,7 +17,7 @@
             $this->name = (string) $new_name;
         }
 
-        function getName(){
+        function getStoreName(){
             return $this->name;
         }
 
@@ -32,7 +32,7 @@
     //SAVE GET-ALL, DELETE-ALL
 
         function save(){
-            $statement = $GLOBALS['DB']->query("INSERT INTO stores (name) VALUES ('{$this->getName()}') RETURNING id;");
+            $statement = $GLOBALS['DB']->query("INSERT INTO stores (name) VALUES ('{$this->getStoreName()}') RETURNING id;");
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             $this->setId($result['id']);
         }

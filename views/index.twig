@@ -22,7 +22,7 @@
                 <div class='row'>
                     {% for brand in brands %}
                     <div class='col-sm-3' id="logo" name="logo">
-                        {{ brand.getBrandName }}
+                        <a href='/brand/{{ brand.getId }}'>{{ brand.getBrandName }}</a>
                     </div>
 
                     {% endfor %}
@@ -46,7 +46,7 @@
                 <div>
                     {% if stores is not empty %}
                         {% for store in stores %}
-                        <li>{{ store.getName }}</li>
+                        <li>{{ store.getStoreName }}</li>
                         {% endfor %}
                     {% endif %}
                 </div>
