@@ -21,35 +21,36 @@
                 {% if brands is not empty %}
                 <div class='row'>
                     {% for brand in brands %}
-                    <div class='col-sm-3' id="logo" name="logo">
+                    <div class='col-sm-3'>
                         <a href='/brand/{{ brand.getId }}'>{{ brand.getBrandName }}</a>
                     </div>
-
                     {% endfor %}
                 </div>
                 {% endif %}
-                <!--{# display brands as links to getBrandStores({id}) #}-->
 
                 <form action="/delete_brands" method="post">
                     <button type="submit" class='btn btn-xs btn-danger'>Delete Brands</button>
                 </form>
             </div>
-        </div>
-<br>
+        </div><br>
+
+
         <div class='row'>
-            <div name="new_store" class="col-sm-6" style="background-color:lavender;">
+            <div name="new_store" class="col-sm-12" style="background-color:lavender;">
                 <form action="/new_store" method="post">
                     <input id="name" name="name" type="text" value='New Store'>
                     <button type="submit" class='btn btn-xs btn-success'>Add a Store</button>
                 </form>
 
-                <div>
                     {% if stores is not empty %}
+                    <div class="row">
                         {% for store in stores %}
-                        <li>{{ store.getStoreName }}</li>
+                        <div class='col-sm-3'>
+                            <a href='/store/{{ store.getId }}'>{{ store.getStoreName }}</a>
+                        </div>
                         {% endfor %}
+                    </div>
                     {% endif %}
-                </div>
 
                 <form action="/delete_stores" method="post">
                     <button type="submit" class='btn btn-xs btn-danger'>Delete Stores</button>

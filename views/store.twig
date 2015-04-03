@@ -9,7 +9,7 @@
   <title>Shootopia</title>
 </head>
 <body>
-    <h3>Shootopia Stores</h3>
+    <h3>{{ store.getStoreName }}</h3>
     <div class='container'>
         <div class="row"><!-- - - - EDIT STORE - - - -->
                 <form action="/edit_store" method="post">
@@ -27,7 +27,8 @@
                 <div>
                     <!-- - - - CARRIED BRANDS - - - -->
                     {% if store_brands is not empty %}
-                    <h4>Carries these fine brands:</h4>
+                    <h4>{{ store.getStoreName }} carries these fine brands:</h4>
+                    <br>
                         {% for brand in store_brands %}
                         <li><a href='/brand/{brand.getId}'>{{ brand.getBrandName }}</a></li>
                         {% endfor %}
@@ -36,14 +37,14 @@
                         {% endif %}
 
                         <!-- - - - ALL BRANDS - - - -->
-                            {% if brands is not empty %}
-                            <h4>All Brands</h4>
-                                {% for brand in brands %}
-                                <a href='/brand/{brand.getId}'>{{ brand.getBrandName }}</a></br>
-                                {% endfor %}
-                                {% else %}
-                                <a href='/add_brand'>Add a new brand</a>
-                            {% endif %}
+                        {% if brands is not empty %}
+                        <h4>All Brands</h4>
+                            {% for brand in brands %}
+                            <a href='/brand/{brand.getId}'>{{ brand.getBrandName }}</a></br>
+                            {% endfor %}
+                            {% else %}
+                            <a href='/add_brand'>Add a new brand</a>
+                        {% endif %}
 
 
                 </div>
@@ -51,6 +52,8 @@
 
             </div>
         </div>
+
+
 
 
 

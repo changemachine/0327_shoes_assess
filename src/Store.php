@@ -56,7 +56,7 @@
 
     // √ FIND, UPDATE & DELETE STORE
 
-        static function find($search_id){
+        static function findStore($search_id){
             $found_store = null;
             $stores = Store::getAll();
             foreach($stores as $store){
