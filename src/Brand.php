@@ -65,7 +65,7 @@
             return $found_brand;
         }
 
-        function update($new_brand_name){
+        function updateBrand($new_brand_name){
             $GLOBALS['DB']->exec("UPDATE brands SET brand_name = '{$new_brand_name}' WHERE id = {$this->getId()};");
             $this->setBrandName($new_brand_name);
         }
