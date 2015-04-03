@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <style>
+    /* logo styling goes here */
+    </style>
+
+  <title>Shootopia</title>
+</head>
+<body>
+    <h3>Shootopia Stores</h3>
+    <div class='container'>
+        <div class="row"><!-- - - - EDIT STORE - - - -->
+                <form action="/edit_store" method="post">
+                    <input id="store_name" name="store_name" type="text" value="New Store Name">
+                    <button type="submit" class='btn btn-xs btn-success'>Edit This Store</button>
+                </form>
+                <form action="/delete_store" method="post">
+                    <button type="submit" class='btn btn-xs btn-danger'>Delete Store</button>
+                </form>
+        </div>
+
+<br>
+        <div class='row'><!-- - - - ASSOCIATE BRANDS - - - -->
+            <div name="add_to_store" class="col-sm-6">
+                <div>
+                    <!-- - - - CARRIED BRANDS - - - -->
+                    {% if store_brands is not empty %}
+                    <h4>Carries these fine brands:</h4>
+                        {% for brand in store_brands %}
+                        <li><a href='/brand/{brand.getId}'>{{ brand.getBrandName }}</a></li>
+                        {% endfor %}
+                        {% else %}
+                        <p>No brands have been added yet for this store.  Do they carry any of these brands?  Or add a new brand to our list!</p>
+                        {% endif %}
+
+                        <!-- - - - ALL BRANDS - - - -->
+                            {% if brands is not empty %}
+                            <h4>All Brands</h4>
+                                {% for brand in brands %}
+                                <a href='/brand/{brand.getId}'>{{ brand.getBrandName }}</a></br>
+                                {% endfor %}
+                                {% else %}
+                                <a href='/add_brand'>Add a new brand</a>
+                            {% endif %}
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</body>
+</html>
