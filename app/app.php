@@ -107,7 +107,7 @@
         $store = Store::findStore($id);
         $new_name = $_POST['store_name'];
         $store->updateStore($new_name);
-        return $app['twig']->render('store_edit.twig', array('store' => $store, 'store_brands' => $store->getStoreBrands(), 'stores' => Store::getAll()));
+        return $app['twig']->render('store_edit.twig', array('store' => $store, 'store_brands' => $store->getStoreBrands(), 'brands' => Brand::getAll()));
     });
 
     // DELETE AND UPDATE STORE ASSOCIATIONS

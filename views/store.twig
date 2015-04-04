@@ -12,12 +12,9 @@
     <h3>{{ store.getStoreName }}</h3>
     <div class='container'>
         <div class="row"><!-- - - - EDIT STORE - - - -->
-                <form action="/edit_store" method="post">
+                <form action="/store/{{ store.getId }}/edit" method="post">
                     <input id="store_name" name="store_name" type="text" value="New Store Name">
                     <button type="submit" class='btn btn-xs btn-success'>Edit This Store</button>
-                </form>
-                <form action="/delete_store" method="post">
-                    <button type="submit" class='btn btn-xs btn-danger'>Delete Store</button>
                 </form>
         </div>
 
