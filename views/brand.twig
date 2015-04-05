@@ -20,29 +20,39 @@
 <br>
         <div class='row'><!-- - - - ASSOCIATED STORES - - - -->
             <div name="add_to_store" class="col-sm-6">
-                <div>
-                    <!-- - - - LIST STORES WITH BRAND - - - -->
-                    {% if brand_stores is not empty %}
-                    <h4>Available at these fine locations:</h4>
-                        {% for store in brand_stores %}
-                        <li><a href='/store/{store.getId}'>{{ store.getStoreName }}</a></li>
-                        {% endfor %}
-                        {% else %}
-                        <p>No stores have been added yet for this brand.  Do any of these stores carry it?  Or add a new store to our list!</p>
-                        {% endif %}
+            <!-- - - - LIST STORES WITH BRAND - - - -->
+                {% if brand_stores is not empty %}
+                <h4>Available at these fine locations:</h4>
+                    {% for store in brand_stores %}
+                    <li><a href='/store/{store.getId}'>{{ store.getStoreName }}</a></li>
+                    {% endfor %}
+                    {% else %}
+                    <p>No stores have been added yet for this brand.  Do any of these stores carry it?</p>
+                {% endif %}
 
-                        <!-- - - - ADD STORE TO BRAND - - - -->
-                            {% if stores is not empty %}
-                            <h4>All Stores</h4>
-                                {% for store in stores %}
-                                <a href='/store/{store.getId}'>{{ store.getStoreName }}</a></br>
-                                {% endfor %}
-                                {% else %}
-                                <a href='/add_store'>Add a new store</a>
-                            {% endif %}
+            <!-- - - - ADD STORE TO BRAND - - - -->
+                {% if stores is not empty %}
+                <h4>All Stores</h4>
+                <form action='/brand/{{ brand.getId }}/add_store' method='post'>
 
+                    <!-- - - - process checkboxes - - - -->
+                    {% for store in stores %}
 
-                </div>
+                        <input type="checkbox" name="add_store[]" value={{ store.getId }} />
+
+                        <a href='/store/{store.getId}'>{{ store.getStoreName }}</a></br>
+                    {% endfor %}
+
+                    {% else %}
+                    <a href='/add_store'>Add a new store</a>
+                {% endif %}
+
+                <button type='submit' class='btn btn-xs btn-success'>Add Brand to These Stores</button>
+                </form>
+                <form action="/new_store" method="post">
+                    <input id="name" name="name" type="text" value='New Store'>
+                    <button type="submit" class='btn btn-xs btn-success'>Add Store to List</button>
+                </form>
 
 
             </div>

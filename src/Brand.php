@@ -76,7 +76,8 @@
         }
 
     // JOINS
-        function addStoreToBrand($store){ // Join in stores_brands
+        function addStoreToBrand($store_id){ // Join in stores_brands
+            $store = Store::findStore($store_id);
             $GLOBALS['DB']->exec("INSERT INTO stores_brands (store_id, brand_id) VALUES ({$store->getId()}, {$this->getId()});");
         }
 
