@@ -97,7 +97,10 @@
             return $stores;
         }
 
-        function deleteStoreBrand(){ //Store drops brand UNCHECKED "AND"
+        function dropStore($store){ //Unchecked "AND" statement
+            $store_id = (int) $store;
+            $store = Store::findStore($store_id);
+            // var_dump($store);
             $GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE store_id = {$store->getId()} AND brand_id = {$this->getId()};");
         }
 

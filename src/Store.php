@@ -18,6 +18,7 @@
         }
 
         function getStoreName(){
+            //BREAKS DOWN ON APOSTROPHES
             return $this->name;
         }
 

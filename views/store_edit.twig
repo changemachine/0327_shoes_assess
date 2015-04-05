@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Store Edit</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    </head>
+    <body>
+    <div class='container'>
+
+    <!-- ======== EDIT STORE ======== -->
+        <div class="row">
+            <h3>{{ store.getStoreName }}</h3>
+                <form action="/store/{{ store.getId }}/edit" method="post">
+                    <input id="store_name" name="store_name" type="text" value="New Name">
+                    <button type="submit" class='btn btn-xs btn-success'>Edit Store</button>
+                </form>
+
+                <form action="/store/{{ store.getId }}/delete" method="post">
+                    <button type="submit" class='btn btn-xs btn-danger'>Delete Store</button>
+                </form>
+        </div>
+
+    <!-- - - - LIST BRANDS AT THIS STORE - - - -->
+        {% if store_brands is not empty %}
+        <div>
+        <h4>Selling these fine brands:</h4>
+            {% for brand in store_brands %}
+            <li><a href='/brand/{brand.getId}'>{{ brand.getBrandName }}</a></li>
+            {% endfor %}
+            {% else %}
+            <p>No brands have been added yet for this store.  Do they carry any of these brands?</p>
+            <br>
+        </div>
+        {% endif %}
+
+    <!-- - - - ADD BRAND TO STORE - - - -->
+        {% if brands is not empty %}
+        <h4>All brands</h4>
+            {% for brand in brands %}
+            <a href='/brand/{brand.getId}'>{{ brand.getBrandName }}</a></br>
+            {% endfor %}
+            {% else %}
+            <a href='/add_brand'>Add a new brand</a>
+        {% endif %}
+
+
+
+
+
+
+    </div>
+    </body>
+</html>

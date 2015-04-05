@@ -65,17 +65,25 @@
     //-- ADD STORE TO BRAND
     $app->post('/brand/{id}/add_store', function($id) use($app){
         $brand = Brand::findBrand($id);
-        $stores = $_POST['add_store'];
-
-        foreach($stores as $store){
-            var_dump($store);
+        //if(isset(add_store...?  ));
+        $add_stores = $_POST['select_stores'];
+        foreach($add_stores as $store){
             $brand->addStoreToBrand($store);
         }
-
         return $app['twig']->render('brand.twig', array('brand' => $brand, 'brand_stores' => $brand->getBrandStores(), 'stores' => Store::getAll()));
     });
-    //-- DELETE AND UPDATE STORE ASSOCIATIONS
 
+    //-- DROP STORE ASSOCIATIONS
+    $app->post('/brand/{id}/drop_store', function($id) use($app){
+        $brand = Brand::findBrand($id);
+        //if(isset(add_store...?  ));
+        $drop_stores = $_POST['select_stores'];
+        foreach($drop_stores as $store){
+            $brand->dropStore($store);
+            //? $brand->save();
+        }
+        return $app['twig']->render('brand.twig', array('brand' => $brand, 'brand_stores' => $brand->getBrandStores(), 'stores' => Store::getAll()));
+    });
 
 
 ////// STORES =========================STORES =========================
